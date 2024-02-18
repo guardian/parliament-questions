@@ -16,15 +16,15 @@ jobs:
           cache: 'npm'
       - run: |
           npm install
-          npm build
-          npm package
+          npm run build
+          npm run package
       - name: CDK synth
         run: |
-          npm install
-          npm tsc
-          npm lint
-          npm test
-          npm synth
+          npm run install
+          npm run tsc
+          npm run lint
+          npm run test
+          npm run synth
         working-directory: cdk
       - name: AWS Auth
         uses: aws-actions/configure-aws-credentials@v2
