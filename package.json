@@ -1,0 +1,25 @@
+{
+	"name": "lord-project",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"prettier": "@guardian/prettier",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npm esbuild --bundle --platform=node --target=node20 --outfile=dist/index.js src/index.ts",
+		"package": "cd dist; zip -qr ../cdk/lord-project.zip ./*"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@guardian/prettier": "^8.0.0",
+		"@types/aws-lambda": "^8.10.134",
+		"@types/node": "^20.11.19",
+		"esbuild": "^0.20.0",
+		"prettier": "^3.2.5",
+		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"aws-lambda": "^1.0.7"
+	}
+}
