@@ -2,24 +2,31 @@
 	"name": "lord-project",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
 	"prettier": "@guardian/prettier",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "npm esbuild --bundle --platform=node --target=node20 --outfile=dist/index.js src/index.ts",
-		"package": "cd dist; zip -qr ../cdk/lord-project.zip ./*"
+		"package": "cd dist; zip -qr ../cdk/lord-project.zip ./*",
+		"start": "nodemon src/index.ts"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@guardian/prettier": "^8.0.0",
 		"@types/aws-lambda": "^8.10.134",
+		"@types/google.accounts": "^0.0.14",
 		"@types/node": "^20.11.19",
 		"esbuild": "^0.20.0",
+		"nodemon": "^3.0.3",
 		"prettier": "^3.2.5",
+		"ts-node": "^10.9.2",
 		"typescript": "^5.3.3"
 	},
 	"dependencies": {
-		"aws-lambda": "^1.0.7"
+		"@aws-sdk/client-ssm": "^3.515.0",
+		"@aws-sdk/credential-provider-node": "^3.515.0",
+		"aws-lambda": "^1.0.7",
+		"googleapis": "^133.0.0",
+		"zod": "^3.22.4"
 	}
 }
