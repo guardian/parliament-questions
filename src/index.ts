@@ -4,8 +4,9 @@ import {
 	APIGatewayProxyCallback,
 } from 'aws-lambda';
 import { Questions } from './types';
-import { exportSheet } from './sheetExport';
+import { getGoogleClient, appendToSheet } from './sheetExport';
 import { getConfig } from './config';
+import { getQuestions } from "./questions-api-client";
 
 export const handler = async (
 	event?: APIGatewayProxyEvent,
@@ -17,23 +18,12 @@ export const handler = async (
 
 	const config = await getConfig();
 
-	const url =
-		'https://questions-statements-api.parliament.uk/api/writtenquestions/questions?tabledWhenFrom=2023-01-01';
+	const results = await getQuestions(new Date(2024, 2, 14), new Date());
 
-	// const request = new Request(url);
+	console.log(`results count: ${results.results.length}`);
 
-	// const response = await fetch(request);
-
-	// const body = Questions.safeParse(await response.json());
-	// if (body.success) {
-	// 	console.log(body.data);
-	// } else {
-	// 	console.log(body.error.message);
-	// }
-
-	//console.log(result);
-
-	await exportSheet(config.auth.credentials, config.sheetId);
+	const client = await getGoogleClient(config.auth.credentials);
+	await appendToSheet(client, config.sheetId, results);
 
 	return Promise.resolve(message);
 };

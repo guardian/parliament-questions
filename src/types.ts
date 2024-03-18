@@ -33,6 +33,8 @@ export const QuestionValue = z.object({
 	questionText: z.string().nullish(),
 	answeringBodyId: z.number(),
 	answeringBodyName: z.string().nullish(),
+	dateAnswered: z.string().nullish(),
+	answerText: z.string().nullish(),
 	isWithdrawn: z.boolean(),
 	isNamedDay: z.boolean(),
 	groupedQuestions: z.array(z.string()).nullish(),
@@ -42,8 +44,6 @@ export const QuestionValue = z.object({
 	answeringMember: Member.nullish(),
 	correctingMemberId: z.number().nullish(),
 	correctingMember: Member.nullish(),
-	dateAnswered: z.string().nullish(),
-	answerText: z.string().nullish(),
 	originalAnswerText: z.string().nullish(),
 	comparableAnswerText: z.string().nullish(),
 	dateAnswerCorrected: z.string().nullish(),
@@ -54,21 +54,27 @@ export const QuestionValue = z.object({
 	// groupedQuestionsDates: []
 });
 
+export const header = Object.keys(QuestionValue.shape);
+
 const Link = z.object({
 	rel: z.string().nullish(),
 	href: z.string().nullish(),
 	method: z.string().nullish(),
 });
 
+export type QuestionValue = z.infer<typeof QuestionValue>;
+
 const QuestionItem = z.object({
 	value: QuestionValue,
 	links: z.array(Link),
 });
+export type QuestionItem = z.infer<typeof QuestionItem>;
 
 export const Questions = z.object({
 	totalResults: z.number(),
 	results: z.array(QuestionItem),
 });
+export type Questions = z.infer<typeof Questions>;
 
 export const ZTokenResponse = z.object({
 	access_token: z.string(),
