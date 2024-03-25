@@ -278,6 +278,16 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
                 ],
               },
             },
+            {
+              "Action": "s3:ListBucket",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ParliamentWrittenQuestionsBucketParliamentquestions44C9D562",
+                  "Arn",
+                ],
+              },
+            },
           ],
           "Version": "2012-10-17",
         },

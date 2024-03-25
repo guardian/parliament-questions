@@ -46,7 +46,7 @@ export class ParliamentQuestions extends GuStack {
 		if (props.stage === 'CODE') {
 			new GuS3Bucket(
 				this,
-				'ParliamentWrittenQuestionsBucket',
+				'ParliamentWrittenQuestionsBucketDev',
 				{
 					app: APP_NAME,
 					bucketName: `parliament-written-questions-dev`,
@@ -92,7 +92,15 @@ export class ParliamentQuestions extends GuStack {
 				effect: Effect.ALLOW,
 				actions: ['s3:PutObject'],
 				resources: [`${parliamentWrittenQuestions.bucketArn}/*`],
-			}),
+			})
 		);
+
+		lambda.addToRolePolicy(
+			new PolicyStatement({
+				effect: Effect.ALLOW,
+				actions: ['s3:ListBucket'],
+				resources: [`${parliamentWrittenQuestions.bucketArn}`],
+			})
+		)
 	}
 }
