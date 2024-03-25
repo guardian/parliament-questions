@@ -1,4 +1,3 @@
-import { JWTInput } from 'google-auth-library';
 import { z } from 'zod';
 
 export const SignedUrlResponseBody = z.object({
@@ -6,19 +5,19 @@ export const SignedUrlResponseBody = z.object({
 });
 
 export enum House {
-	Bicameral = 'Bicameral',
-	Commons = 'Commons',
+	// Bicameral = 'Bicameral',
+	Coms = 'Commons',
 	Lords = 'Lords',
 }
 
 const Member = z.object({
 	id: z.number(),
-	name: z.string(),
-	party: z.string(),
-	partyColour: z.string(),
-	partyAbbreviation: z.string(),
-	memberFrom: z.string(),
-	thumbnailUrl: z.string(),
+	name: z.string().nullish(),
+	party: z.string().nullish(),
+	partyColour: z.string().nullish(),
+	partyAbbreviation: z.string().nullish(),
+	memberFrom: z.string().nullish(),
+	thumbnailUrl: z.string().nullish(),
 });
 
 export const QuestionValue = z.object({
@@ -54,7 +53,10 @@ export const QuestionValue = z.object({
 	// groupedQuestionsDates: []
 });
 
-export const header = Object.keys(QuestionValue.shape);
+export const headers = () => {
+	const header = Object.keys(QuestionValue.shape);
+	return header.toSpliced(3, 0, 'askingMemberParty').toSpliced(21, 0, 'answeringMemberParty');
+}
 
 const Link = z.object({
 	rel: z.string().nullish(),

@@ -9,6 +9,7 @@ export interface LordProjectConfig {
 	};
 	aws: {
 		region: string;
+		s3Bucket: string;
 	};
 	sheetId: string;
 }
@@ -42,6 +43,8 @@ export const getConfig = async (): Promise<LordProjectConfig> => {
 
 	const sheetId = findParameter(parameters, paramPath, 'google/sheet-id');
 
+	const s3Bucket = 'test-temprary-bucket';
+
 	return {
 		auth: { credentials: credentials },
 		app: {
@@ -49,6 +52,7 @@ export const getConfig = async (): Promise<LordProjectConfig> => {
 		},
 		aws: {
 			region,
+			s3Bucket
 		},
 		sheetId
 	};
