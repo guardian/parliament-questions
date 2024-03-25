@@ -1,11 +1,11 @@
 import 'source-map-support/register';
 import { GuRoot } from '@guardian/cdk/lib/constructs/root';
-import { LordProject, LoggingLevel } from '../lib/lord-project';
+import { ParliamentQuestions, LoggingLevel } from '../lib/parliament-questions';
 
 const app = new GuRoot();
-new LordProject(
+new ParliamentQuestions(
 	app,
-	'lord-project-CODE',
+	'parliament-questions-CODE',
 	{
 		stack: 'investigations',
 		stage: 'CODE',

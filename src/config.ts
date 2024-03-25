@@ -2,7 +2,7 @@ import { Parameter, SSM } from '@aws-sdk/client-ssm';
 import { defaultProvider } from '@aws-sdk/credential-provider-node';
 import { findParameter, getParameters } from './configHelper';
 
-export interface LordProjectConfig {
+export interface ParliamentQuestionConfig {
 	auth: { credentials: string };
 	app: {
 		stage: string;
@@ -17,7 +17,7 @@ export interface LordProjectConfig {
 const credentialProvider = (onAws: boolean) =>
 	onAws ? undefined : defaultProvider({ profile: 'investigations' });
 
-export const getConfig = async (): Promise<LordProjectConfig> => {
+export const getConfig = async (): Promise<ParliamentQuestionConfig> => {
 	const region = 'eu-west-1';
 	const stage = 'DEV'; //await getEnvVarOrMetadata('STAGE', 'tags/instance/Stage');
 	const ssm = new SSM({
@@ -25,7 +25,7 @@ export const getConfig = async (): Promise<LordProjectConfig> => {
 		credentials: credentialProvider(stage !== 'DEV'),
 	});
 
-	const paramPath = `/${stage}/investigations/lords/`;
+	const paramPath = `/${stage}/investigations/parliament-questions/`;
 
 	const parameters = await getParameters(paramPath, ssm);
 	const parameterNames = parameters.map((param: Parameter) => {

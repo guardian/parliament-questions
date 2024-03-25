@@ -6,7 +6,7 @@ export const SignedUrlResponseBody = z.object({
 
 export enum House {
 	// Bicameral = 'Bicameral',
-	Coms = 'Commons',
+	Commons = 'Commons',
 	Lords = 'Lords',
 }
 

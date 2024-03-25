@@ -18,7 +18,7 @@ export const handler = async (
 	const config = await getConfig();
 	const from = new Date(2024, 2, 19);
 	const to = new Date(2024, 2, 19);
-	const RETRIEVE_FROM_API = true;
+	const RETRIEVE_FROM_API = false;
 	const s3Client = getS3Client(config.aws.region);
 
 	const houses = Object.keys(House);

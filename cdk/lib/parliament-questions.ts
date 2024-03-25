@@ -9,7 +9,7 @@ import { Schedule } from 'aws-cdk-lib/aws-events';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 
-const APP_NAME = 'lord-project';
+const APP_NAME = 'parliament-questions';
 
 export enum LoggingLevel {
 	SILLY,
@@ -21,7 +21,7 @@ export enum LoggingLevel {
 	FATAL,
 }
 
-export class LordProject extends GuStack {
+export class ParliamentQuestions extends GuStack {
 	constructor(
 		scope: App,
 		id: string,

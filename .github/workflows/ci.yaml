@@ -1,4 +1,4 @@
-name: 'CI: lord project'
+name: 'CI: parliament question'
 on: [push]
 jobs:
   ci:
@@ -35,10 +35,10 @@ jobs:
       #   uses: guardian/actions-riff-raff@v2
       #   with:
       #     configPath: cdk/cdk.out/riff-raff.yaml
-      #     projectName: investigations::lord-project
+      #     projectName: investigations::parliament-questions
       #     buildNumberOffset: 60
       #     contentDirectories: |
       #       cdk.out:
-      #         - cdk/cdk.out/lord-project-CODE.template.json
-      #       lord-project:
-      #         - cdk/lord-project.zip
+      #         - cdk/cdk.out/parliament-questions-CODE.template.json
+      #       parliament-questions:
+      #         - cdk/parliament-questions.zip
