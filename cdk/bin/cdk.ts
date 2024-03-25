@@ -1,6 +1,6 @@
 import 'source-map-support/register';
 import { GuRoot } from '@guardian/cdk/lib/constructs/root';
-import { ParliamentQuestions, LoggingLevel } from '../lib/parliament-questions';
+import { LoggingLevel, ParliamentQuestions } from '../lib/parliament-questions';
 
 const app = new GuRoot();
 new ParliamentQuestions(
