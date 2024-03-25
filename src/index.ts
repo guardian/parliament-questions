@@ -6,7 +6,7 @@ import {
 import { getGoogleClient, appendToSheet } from './sheetExport';
 import { getConfig } from './config';
 import { getQuestions } from "./questions-api-client";
-import { getS3Client, putObject, retrieveDataFromS3 } from './S3';
+import { getS3Client, putObject, retrieveDataFromS3 } from './s3';
 import { House, Questions } from './types';
 import { S3Client } from '@aws-sdk/client-s3';
 
