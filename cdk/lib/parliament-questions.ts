@@ -70,7 +70,7 @@ export class ParliamentQuestions extends GuStack {
 			handler: 'dist/lambda/index.handler',
 			rules: [
 				{
-					schedule: Schedule.cron({ hour: '10', minute: '00', weekDay: '2' }),
+					schedule: Schedule.cron({ hour: '10', minute: '00' }),
 				},
 			],
 			monitoringConfiguration: {

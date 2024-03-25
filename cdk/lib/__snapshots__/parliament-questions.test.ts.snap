@@ -300,9 +300,28 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
       },
       "Type": "AWS::IAM::Policy",
     },
-    "parliamentquestionsparliamentquestionscron00102024BBE5BF": {
+    "parliamentquestionsparliamentquestionscron00100AllowEventRuleParliamentQuestionsparliamentquestions179D0339095CAD34": {
       "Properties": {
-        "ScheduleExpression": "cron(00 10 ? * 2 *)",
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "parliamentquestions48FEC04C",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "parliamentquestionsparliamentquestionscron00100DB99E758",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "parliamentquestionsparliamentquestionscron00100DB99E758": {
+      "Properties": {
+        "ScheduleExpression": "cron(00 10 * * ? *)",
         "State": "ENABLED",
         "Targets": [
           {
@@ -317,25 +336,6 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
         ],
       },
       "Type": "AWS::Events::Rule",
-    },
-    "parliamentquestionsparliamentquestionscron001020AllowEventRuleParliamentQuestionsparliamentquestions179D0339E225F31F": {
-      "Properties": {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "parliamentquestions48FEC04C",
-            "Arn",
-          ],
-        },
-        "Principal": "events.amazonaws.com",
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "parliamentquestionsparliamentquestionscron00102024BBE5BF",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
     },
   },
 }
