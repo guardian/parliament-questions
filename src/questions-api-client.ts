@@ -2,7 +2,7 @@ import { Moment } from "moment";
 import { House, QuestionsQueryStatus, Questions } from "./types";
 
 const getQueryParams = (from: Moment, to: Moment, skip: number, house: House, questionStatus: QuestionsQueryStatus) => {
-    const take = '10';
+    const take = '50';
     const fromStr = from.format('YYYY-MM-DD');
     const toStr = to.format('YYYY-MM-DD');
     const queryParams = questionStatus === QuestionsQueryStatus.Questions ?

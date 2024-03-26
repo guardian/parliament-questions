@@ -34,7 +34,7 @@ export const handler = async (
 			await retrieveDataFromS3(s3Client, config.aws.s3Bucket, house);		
 		
 		console.log(`final total results for house of ${house} are ${results.totalResults}`);
-		await appendToGoogleSheet(results, config.auth.credentials, config.sheetId, house);
+		await appendToGoogleSheet(results, config.auth.credentials, config.sheetId, house, from);
 	}
 	
 	return Promise.resolve('completed');
@@ -48,9 +48,11 @@ const retrieveDataFromApi = async (client: S3Client, bucket: string, house: Hous
 	return results;
 }
 
-const appendToGoogleSheet = async (results: Questions, credentials: string, sheetId: string, house: House) => {
+const appendToGoogleSheet = async (results: Questions, credentials: string, sheetId: string, house: House, date: Moment) => {
 	console.log(`results count: ${results.results.length}`);
+
+	const year = date.year();
 	
 	const client = await getGoogleClient(credentials);
-	await appendToSheet(client, sheetId, results, house);	
+	await appendToSheet(client, sheetId, results, house, year);	
 }

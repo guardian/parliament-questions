@@ -23,20 +23,19 @@ export const getGoogleClient = async (credentials: string): Promise<JWT> => {
 	}
 }
 
-const getFirstEmptyCol = async (client: JWT, spreadsheetId: string, house: House, ) => {
+const getFirstEmptyCol = async (client: JWT, spreadsheetId: string, tabName: string, ) => {
 	const gsApi = google.sheets({version: 'v4', auth: client});
-	const res = await gsApi.spreadsheets.values.get({spreadsheetId, range: `${house.toString()}!A:A`});
+	const res = await gsApi.spreadsheets.values.get({spreadsheetId, range: `${tabName}!A:A`});
 	const lastRow = res.data.values?.length || 0;
 	console.log(`last row in the sheet is ${lastRow}`);
 	return lastRow + 1;
 }
 
 
-const appendRow = async (sheetsApi: sheets_v4.Sheets, spreadsheetId: string, house: House, row: number, values: string[][]) => {
-	const sheetTab =  house.toString();
+const appendRow = async (sheetsApi: sheets_v4.Sheets, spreadsheetId: string, tabName: string, row: number, values: string[][]) => {
 	const opt = {
 		spreadsheetId,
-		range: `${sheetTab}!A${row}`,
+		range: `${tabName}!A${row}`,
 		valueInputOption: 'USER_ENTERED',
 		resource: { values }
 	};
@@ -87,15 +86,17 @@ const buildRows = (values: QuestionItem[], headers: string[], results: string[][
 	}
 }
 
-export const appendToSheet = async (client: JWT, spreadsheetId: string, values: Questions, house: House) => {
-	
+export const appendToSheet = async (client: JWT, spreadsheetId: string, values: Questions, house: House, year: number) => {
+	const tabName = `${year.toString()}-${house.toString()}`;
+	console.log(`tab name is ${tabName}`);
 	const gsApi = google.sheets({version: 'v4', auth: client});
-	const firstRow = await getFirstEmptyCol(client, spreadsheetId, house);	
+	const firstRow = await getFirstEmptyCol(client, spreadsheetId, tabName);	
 	const firstRowHeader = headers();
 
 	console.log(`adding ${values.results.length} questions to sheet at row ${firstRow}`);
 
 	const initialRowsData = firstRow === 1 ? [firstRowHeader] : [];
 	const rows = buildRows(values.results, firstRowHeader, initialRowsData);
-	await appendRow(gsApi, spreadsheetId, house, firstRow, rows);
+	
+	await appendRow(gsApi, spreadsheetId, tabName, firstRow, rows);
 }
