@@ -56,7 +56,7 @@ export class ParliamentQuestions extends GuStack {
 
 		const otherConfig = {
 			app: APP_NAME,
-			runtime: Runtime.NODEJS_18_X,
+			runtime: Runtime.NODEJS_20_X,
 			fileName: `${APP_NAME}.zip`,
 			timeout: Duration.millis(45000),
 			environment: {
