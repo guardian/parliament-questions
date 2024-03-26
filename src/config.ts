@@ -19,7 +19,7 @@ const credentialProvider = (onAws: boolean) =>
 
 export const getConfig = async (): Promise<ParliamentQuestionConfig> => {
 	const region = 'eu-west-1';
-	const stage = 'DEV'; //await getEnvVarOrMetadata('STAGE', 'tags/instance/Stage');
+	const stage = process.env['STAGE'];
 	const ssm = new SSM({
 		region,
 		credentials: credentialProvider(stage !== 'DEV'),
