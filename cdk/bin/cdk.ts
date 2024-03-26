@@ -13,3 +13,14 @@ new ParliamentQuestions(
 	},
 	LoggingLevel.DEBUG,
 );
+
+new ParliamentQuestions(
+	app,
+	'parliament-questions-PROD',
+	{
+		stack: 'investigations',
+		stage: 'PROD',
+		env: { region: 'eu-west-1' },
+	},
+	LoggingLevel.DEBUG,
+);
