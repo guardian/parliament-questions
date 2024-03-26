@@ -31,7 +31,7 @@ export const handler = async (
 		const house: House = House[key as keyof typeof House];
 		const results = RETRIEVE_FROM_API ? 
 			await retrieveDataFromApi(s3Client, config.aws.s3Bucket, house, from, to) : 
-			await retrieveDataFromS3(s3Client, config.aws.s3Bucket, house);		
+			await retrieveDataFromS3(s3Client, config.aws.s3Bucket, house, from);		
 		
 		console.log(`final total results for house of ${house} are ${results.totalResults}`);
 		await appendToGoogleSheet(results, config.auth.credentials, config.sheetId, house, from);

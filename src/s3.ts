@@ -19,10 +19,11 @@ export const getS3Client = (
 export const retrieveDataFromS3 = async (
     client: S3Client,
 	bucket: string,
-    folder: House): Promise<Questions> => {
+    folder: House,
+    date: Moment): Promise<Questions> => {
         const command = new ListObjectsV2Command({
             Bucket: bucket,
-            Prefix: `${folder}`,
+            Prefix: `${folder}/${date.year()}/${date.format('MMMM')}`,
         });
 
         const allS3Keys = await listAllObjects(client, command, []);
@@ -118,7 +119,7 @@ export const putObject = async (
     from: Moment, to: Moment) => {
 
         const json = JSON.stringify(questions, null, 2);
-        const fileName = `${house.toString()}/${from.format('YYYY-MM-DD')}_${to.format('YYYY-MM-DD')}.json`;
+        const fileName = `${house.toString()}/${from.year()}/${from.format('MMMM')}/${from.format('YYYY-MM-DD')}_${to.format('YYYY-MM-DD')}.json`;
         const command = new PutObjectCommand({
             Bucket: bucket,
 			Key: fileName,
