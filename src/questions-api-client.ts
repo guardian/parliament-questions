@@ -1,27 +1,43 @@
-import moment from "moment";
-import { House, Questions } from "./types";
+import { Moment } from "moment";
+import { House, QuestionsQueryStatus, Questions } from "./types";
 
-export const getQuestions = async (from: Date, to: Date, house: House, results: Questions | undefined = undefined): Promise<Questions> => {
+const getQueryParams = (from: Moment, to: Moment, skip: number, house: House, questionStatus: QuestionsQueryStatus) => {
     const take = '10';
-    const fromStr = moment(from).format('YYYY-MM-DD');
-    const toStr = moment(to).format('YYYY-MM-DD');
+    const fromStr = from.format('YYYY-MM-DD');
+    const toStr = to.format('YYYY-MM-DD');
+    const queryParams = questionStatus === QuestionsQueryStatus.Questions ?
+            new URLSearchParams({
+                tabledWhenFrom: fromStr,
+                tabledWhenTo: toStr,
+                take,
+                skip: skip.toString(),
+                house,
+                expandMember: 'true'
+            }) : 
+            new URLSearchParams({
+                answeredWhenFrom: fromStr,
+                answeredWhenTo: toStr,
+                take,
+                skip: skip.toString(),
+                house,
+                expandMember: 'true'
+            });
 
+    return queryParams;
+}
+
+export const getQuestions = async (from: Moment, to: Moment, house: House, questionStatus: QuestionsQueryStatus, results: Questions | undefined = undefined): Promise<Questions> => {
     const url =
     `https://questions-statements-api.parliament.uk/api/writtenquestions/questions?`;
 
-
-    const queryParams = new URLSearchParams({
-        tabledWhenFrom: fromStr,
-        tabledWhenTo: toStr,
-        take,
-        skip: results?.results.length.toString() || '0',
-        house,
-        expandMember: 'true'
-    });
+    const skip = results?.results.length || 0;
+    const queryParams = getQueryParams(from, to, skip, house, questionStatus);
+    console.log('query params: ');
+    console.log(queryParams);
 
     const request = new Request(url + queryParams.toString());
 
-    console.log(`retrieving data from ${fromStr} to ${toStr}`);
+    console.log(`retrieving data from ${from} to ${to}`);
     console.log(request.url);
     const response = await fetch(request);
     console.log(`fetch completed`);
@@ -35,7 +51,7 @@ export const getQuestions = async (from: Date, to: Date, house: House, results: 
         if (newResults.results.length >= newResults.totalResults) {
             return newResults;
         }
-        return getQuestions(from, to, house, newResults);
+        return getQuestions(from, to, house, questionStatus, newResults);
     } else {
         throw new Error(`failed in fetching questions ${body.error.message}`);        
     }

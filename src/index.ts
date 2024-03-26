@@ -6,9 +6,10 @@ import {
 import { getGoogleClient, appendToSheet } from './sheetExport';
 import { getConfig } from './config';
 import { getQuestions } from "./questions-api-client";
-import { getS3Client, putObject, retrieveDataFromS3 } from './s3';
-import { House, Questions } from './types';
+import { concatResults, getS3Client, putObject, retrieveDataFromS3 } from './s3';
+import { House, QuestionsQueryStatus, Questions } from './types';
 import { S3Client } from '@aws-sdk/client-s3';
+import moment, { Moment } from 'moment';
 
 export const handler = async (
 	event?: APIGatewayProxyEvent,
@@ -16,9 +17,12 @@ export const handler = async (
 	callback?: APIGatewayProxyCallback,
 ): Promise<string> => {
 	const config = await getConfig();
-	const from = new Date(2024, 2, 19);
-	const to = new Date(2024, 2, 19);
-	const RETRIEVE_FROM_API = false;
+	// const from = moment(new Date(2024, 2, 19));
+	// const to = moment(new Date(2024, 2, 19));
+	const from = moment().subtract(1, 'days').startOf('day'); // yesterday
+	const to = from;
+	console.log(`date is: `, from.format('YYYY-MM-DD'));
+	const RETRIEVE_FROM_API = true;
 	const s3Client = getS3Client(config.aws.region);
 
 	const houses = Object.keys(House);
@@ -37,8 +41,10 @@ export const handler = async (
 	return Promise.resolve('completed');
 };
 
-const retrieveDataFromApi = async (client: S3Client, bucket: string, house: House, from: Date, to: Date) => {
-	const results = await getQuestions(from, to, house);
+const retrieveDataFromApi = async (client: S3Client, bucket: string, house: House, from: Moment, to: Moment) => {
+	const questionsPublished = await getQuestions(from, to, house, QuestionsQueryStatus.Questions);
+	const answeredQuestionsPublished = await getQuestions(from, to, house, QuestionsQueryStatus.Answers);
+	const results = concatResults(questionsPublished, answeredQuestionsPublished);
 	await putObject(client, bucket, results, house, from, to);
 	return results;
 }

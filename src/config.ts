@@ -42,8 +42,8 @@ export const getConfig = async (): Promise<ParliamentQuestionConfig> => {
 	);
 
 	const sheetId = findParameter(parameters, paramPath, 'google/sheet-id');
-
-	const s3Bucket = 'test-temprary-bucket';
+	
+	const s3Bucket = findParameter(parameters, paramPath, 'aws/s3-bucket');
 
 	return {
 		auth: { credentials: credentials },

@@ -5,7 +5,7 @@ import {
 	S3Client,
 } from '@aws-sdk/client-s3';
 import { House, Questions } from './types';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import fs from "fs";
 
 export const getS3Client = (
@@ -115,10 +115,10 @@ export const putObject = async (
 	bucket: string,
 	questions: Questions,
     house: House,
-    from: Date, to: Date) => {
+    from: Moment, to: Moment) => {
 
         const json = JSON.stringify(questions, null, 2);
-        const fileName = `${house.toString()}/${moment(from).format('YYYY-MM-DD')}_${moment(to).format('YYYY-MM-DD')}.json`;
+        const fileName = `${house.toString()}/${from.format('YYYY-MM-DD')}_${to.format('YYYY-MM-DD')}.json`;
         const command = new PutObjectCommand({
             Bucket: bucket,
 			Key: fileName,

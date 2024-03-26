@@ -10,6 +10,11 @@ export enum House {
 	Lords = 'Lords',
 }
 
+export enum QuestionsQueryStatus {
+	Questions = 'Questions',
+	Answers = 'Answers',
+}
+
 const Member = z.object({
 	id: z.number(),
 	name: z.string().nullish(),
