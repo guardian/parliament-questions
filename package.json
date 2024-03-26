@@ -7,7 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "esbuild --bundle --platform=node --target=node20 --outfile=dist/index.js src/index.ts",
 		"package": "cd dist; zip -qr ../cdk/parliament-questions.zip ./*",
-		"start": "nodemon src/index.ts --ignore src/output/*.json"
+		"start": "STAGE=DEV nodemon src/index.ts --ignore src/output/*.json"
 	},
 	"author": "",
 	"license": "ISC",

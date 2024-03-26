@@ -27,7 +27,7 @@ export const handler = async (
 
 	const houses = Object.keys(House);
 
-	houses.forEach(async (key, index) => {
+	for (const key of houses) {
 		const house: House = House[key as keyof typeof House];
 		const results = RETRIEVE_FROM_API ? 
 			await retrieveDataFromApi(s3Client, config.aws.s3Bucket, house, from, to) : 
@@ -35,8 +35,7 @@ export const handler = async (
 		
 		console.log(`final total results for house of ${house} are ${results.totalResults}`);
 		await appendToGoogleSheet(results, config.auth.credentials, config.sheetId, house);
-	});
-
+	}
 	
 	return Promise.resolve('completed');
 };
@@ -55,5 +54,3 @@ const appendToGoogleSheet = async (results: Questions, credentials: string, shee
 	const client = await getGoogleClient(credentials);
 	await appendToSheet(client, sheetId, results, house);	
 }
-
-handler();
