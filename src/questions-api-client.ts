@@ -32,8 +32,6 @@ export const getQuestions = async (from: Moment, to: Moment, house: House, quest
 
     const skip = results?.results.length || 0;
     const queryParams = getQueryParams(from, to, skip, house, questionStatus);
-    console.log('query params: ');
-    console.log(queryParams);
 
     const request = new Request(url + queryParams.toString());
 

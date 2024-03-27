@@ -21,11 +21,13 @@ export const handler = async (
 	// const to = moment(new Date(2024, 2, 19));
 	const from = moment().subtract(1, 'days').startOf('day'); // yesterday
 	const to = from;
-	console.log(`date is: `, from.format('YYYY-MM-DD'));
 	const RETRIEVE_FROM_API = true;
 	const s3Client = getS3Client(config.aws.region);
 
 	const houses = Object.keys(House);
+
+	console.log(`from date is: `, from.format('YYYY-MM-DD'));
+	console.log(`to date is: `, to.format('YYYY-MM-DD'));
 
 	for (const key of houses) {
 		const house: House = House[key as keyof typeof House];
@@ -56,3 +58,6 @@ const appendToGoogleSheet = async (results: Questions, credentials: string, shee
 	const client = await getGoogleClient(credentials);
 	await appendToSheet(client, sheetId, results, house, year);	
 }
+
+// handler needs to get called When running locally
+// handler();
