@@ -23,7 +23,7 @@ export const getGoogleClient = async (credentials: string): Promise<JWT> => {
 	}
 }
 
-const getFirstEmptyCol = async (client: JWT, spreadsheetId: string, tabName: string, ) => {
+const getFirstEmptyRow = async (client: JWT, spreadsheetId: string, tabName: string, ) => {
 	const gsApi = google.sheets({version: 'v4', auth: client});
 	const res = await gsApi.spreadsheets.values.get({spreadsheetId, range: `${tabName}!A:A`});
 	const lastRow = res.data.values?.length || 0;
@@ -90,7 +90,7 @@ export const appendToSheet = async (client: JWT, spreadsheetId: string, values: 
 	const tabName = `${year.toString()}-${house.toString()}`;
 	console.log(`tab name is ${tabName}`);
 	const gsApi = google.sheets({version: 'v4', auth: client});
-	const firstRow = await getFirstEmptyCol(client, spreadsheetId, tabName);	
+	const firstRow = await getFirstEmptyRow(client, spreadsheetId, tabName);	
 	const firstRowHeader = headers();
 
 	console.log(`adding ${values.results.length} questions to sheet at row ${firstRow}`);

@@ -16,6 +16,11 @@ export const getS3Client = (
 	});
 };
 
+// TODO: this function currently accepts a date and extracts 
+// all the S3 data that falls under the year/month of the given date
+// But we need to make sure the data under that month is not too many, 
+// otherwise, we should split the data. Because otherwise we would 
+// face stack overflow exception in sheetExport/buildRows due to the recursion
 export const retrieveDataFromS3 = async (
     client: S3Client,
 	bucket: string,
