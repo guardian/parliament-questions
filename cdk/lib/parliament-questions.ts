@@ -54,7 +54,7 @@ export class ParliamentQuestions extends GuStack {
 			);
 		}
 
-		const otherConfig = {
+		const lambda = new GuScheduledLambda(this, APP_NAME, {
 			app: APP_NAME,
 			runtime: Runtime.NODEJS_20_X,
 			fileName: `${APP_NAME}.zip`,
@@ -64,9 +64,6 @@ export class ParliamentQuestions extends GuStack {
 				Stage: this.stage,
 				LoggingLevel: loggingLevel.toString(),
 			},
-		};
-
-		const lambda = new GuScheduledLambda(this, APP_NAME, {
 			handler: 'dist/lambda/index.handler',
 			rules: [
 				{
@@ -76,7 +73,6 @@ export class ParliamentQuestions extends GuStack {
 			monitoringConfiguration: {
 				noMonitoring: true,
 			},
-			...otherConfig,
 		});
 
 		const getParametersPolicy = new PolicyStatement({
