@@ -30,14 +30,10 @@ jobs:
           npm run test
           npm run synth
         working-directory: cdk
-      - name: AWS Auth
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
-          aws-region: eu-west-1
       - name: Upload to riff-raff
-        uses: guardian/actions-riff-raff@v3
+        uses: guardian/actions-riff-raff@v4
         with:
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           configPath: cdk/cdk.out/riff-raff.yaml
           projectName: investigations::parliament-questions
