@@ -33,7 +33,7 @@ export class ParliamentQuestions extends GuStack {
 		const ssmPrefix = `arn:aws:ssm:${props.env?.region}:${GuardianAwsAccounts.Investigations}:parameter`;
 		const ssmPath = `${this.stage}/${this.stack}/${APP_NAME}`;
 
-		const parliamentWrittenQuestions = new GuS3Bucket(
+		const dataBucket = new GuS3Bucket(
 			this,
 			'ParliamentWrittenQuestionsBucket',
 			{
@@ -91,7 +91,7 @@ export class ParliamentQuestions extends GuStack {
 			new PolicyStatement({
 				effect: Effect.ALLOW,
 				actions: ['s3:PutObject'],
-				resources: [`${parliamentWrittenQuestions.bucketArn}/*`],
+				resources: [`${dataBucket.bucketArn}/*`],
 			})
 		);
 
@@ -99,7 +99,7 @@ export class ParliamentQuestions extends GuStack {
 			new PolicyStatement({
 				effect: Effect.ALLOW,
 				actions: ['s3:ListBucket'],
-				resources: [`${parliamentWrittenQuestions.bucketArn}`],
+				resources: [`${dataBucket.bucketArn}`],
 			})
 		)
 	}
