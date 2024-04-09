@@ -70,21 +70,9 @@ const makeRow = (questionValue: QuestionValue, headers: string[]) => {
 	return res;
 }
 
-const buildRows = (values: QuestionItem[], headers: string[], results: string[][]): string[][] => {
-	if (values.length > 0) {			
-		const [head, ...tail] = values;
-		if (head) {
-			const rowData = makeRow(head.value, headers);
-			results.push(rowData);
-			
-			return buildRows(tail, headers, results);
-		} else {
-			return results;
-		}
-	} else {
-		return results;
-	}
-}
+const buildRows = (values: QuestionItem[], headers: string[]): string[][] => values.map((question => {
+	return makeRow(question.value, headers);
+}));
 
 export const appendToSheet = async (client: JWT, spreadsheetId: string, values: Questions, house: House, year: number) => {
 	const tabName = `${year.toString()}-${house.toString()}`;
@@ -96,7 +84,7 @@ export const appendToSheet = async (client: JWT, spreadsheetId: string, values: 
 	console.log(`adding ${values.results.length} questions to sheet at row ${firstRow}`);
 
 	const initialRowsData = firstRow === 1 ? [firstRowHeader] : [];
-	const rows = buildRows(values.results, firstRowHeader, initialRowsData);
-	
+	const rows = initialRowsData.concat(buildRows(values.results, firstRowHeader));
+
 	await appendRow(gsApi, spreadsheetId, tabName, firstRow, rows);
 }

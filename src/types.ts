@@ -120,3 +120,19 @@ export const GoogleCredential = z.object({
 });
 
 export type GoogleCredential = z.infer<typeof GoogleCredential>;
+
+
+export enum Month {
+	Jan = 'January',
+	Feb = 'February',
+	Mar = 'March',
+	Apr = 'April',
+	May = 'May',
+	Jun = 'June',
+	Jul = 'July',
+	Aug = 'August',
+	Sep = 'September',
+	Oct = 'October',
+	Nov = 'November',
+	Dec = 'December'
+}

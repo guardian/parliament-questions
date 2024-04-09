@@ -4,7 +4,7 @@ import {
 	PutObjectCommand,
 	S3Client,
 } from '@aws-sdk/client-s3';
-import { House, Questions } from './types';
+import { House, Month, Questions } from './types';
 import moment, { Moment } from 'moment';
 import fs from "fs";
 
@@ -25,13 +25,15 @@ export const retrieveDataFromS3 = async (
     client: S3Client,
 	bucket: string,
     folder: House,
-    date: Moment): Promise<Questions> => {
+    year: number,
+    month: Month | undefined = undefined): Promise<Questions> => {
         const command = new ListObjectsV2Command({
             Bucket: bucket,
-            Prefix: `${folder}/${date.year()}/${date.format('MMMM')}`,
+            Prefix: month ? `${folder}/${year.toString()}/${month}` : `${folder}/${year.toString()}`,
         });
 
         const allS3Keys = await listAllObjects(client, command, []);
+        console.log(`downloading S3 keys for prefix ${folder}/${year.toString()}/${month} *********`);        
 
         const allS3Objects = await allS3Keys.map(async (key) => await getObject(client, bucket, key));
 
@@ -47,16 +49,12 @@ export const retrieveDataFromS3 = async (
         }       
 }
 
-export const concatResults = (results: Questions | undefined, newResults: Questions): Questions => {
-    if (results) {
-        const concatResults = results.results.concat(newResults.results);
+export const concatResults = (results: Questions, newResults: Questions): Questions => {
+    const concatResults = results.results.concat(newResults.results);
 
-        return {
-            totalResults: results.totalResults + newResults.totalResults,
-            results: concatResults
-        }
-    } else {
-        return newResults;
+    return {
+        totalResults: results.totalResults + newResults.totalResults,
+        results: concatResults
     }
 }
 
