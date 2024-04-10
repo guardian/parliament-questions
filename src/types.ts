@@ -89,7 +89,7 @@ export const headers = [
 	'dateHoldingAnswer',
 	'attachmentCount',
 	'heading',
-];
+] as const;
 
 const Link = z.object({
 	rel: z.string().nullish(),

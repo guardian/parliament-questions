@@ -62,7 +62,7 @@ const appendRow = async (
 	sheetsApi.spreadsheets.values.append(opt);
 };
 
-const makeRow = (questionValue: QuestionValue, headers: string[]) => {
+const makeRow = (questionValue: QuestionValue) => {
 	const res = headers.map((h) => {
 		if (h === 'askingMember') {
 			return questionValue.askingMember?.name?.toString() || '';
@@ -80,7 +80,7 @@ const makeRow = (questionValue: QuestionValue, headers: string[]) => {
 			return questionValue.correctingMember?.name?.toString() || '';
 		}
 		if (h in questionValue) {
-			return questionValue[h as keyof QuestionValue]?.toString() || '';
+			return questionValue[h]?.toString() || '';
 		} else {
 			return '';
 		}
@@ -89,9 +89,9 @@ const makeRow = (questionValue: QuestionValue, headers: string[]) => {
 	return res;
 };
 
-const buildRows = (values: QuestionItem[], headers: string[]): string[][] =>
+const buildRows = (values: QuestionItem[]): string[][] =>
 	values.map((question) => {
-		return makeRow(question.value, headers);
+		return makeRow(question.value);
 	});
 
 export const appendToSheet = async (
@@ -110,8 +110,8 @@ export const appendToSheet = async (
 		`adding ${values.results.length} questions to sheet at row ${firstRow}`,
 	);
 
-	const initialRowsData = firstRow === 1 ? [headers] : [];
-	const rows = initialRowsData.concat(buildRows(values.results, headers));
+	const initialRowsData: string[][] = firstRow === 1 ? [[...headers]] : [];
+	const rows = initialRowsData.concat(buildRows(values.results));
 
 	await appendRow(gsApi, spreadsheetId, tabName, firstRow, rows);
 };
