@@ -42,7 +42,7 @@ export const getConfig = async (): Promise<ParliamentQuestionConfig> => {
 	);
 
 	const sheetId = findParameter(parameters, paramPath, 'google/sheet-id');
-	
+
 	const s3Bucket = findParameter(parameters, paramPath, 'aws/s3-bucket');
 
 	return {
@@ -52,8 +52,8 @@ export const getConfig = async (): Promise<ParliamentQuestionConfig> => {
 		},
 		aws: {
 			region,
-			s3Bucket
+			s3Bucket,
 		},
-		sheetId
+		sheetId,
 	};
 };

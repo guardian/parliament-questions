@@ -44,14 +44,10 @@ export class ParliamentQuestions extends GuStack {
 
 		// we only want one dev bucket so only create on CODE
 		if (props.stage === 'CODE') {
-			new GuS3Bucket(
-				this,
-				'ParliamentWrittenQuestionsBucketDev',
-				{
-					app: APP_NAME,
-					bucketName: `parliament-written-questions-dev`,
-				},
-			);
+			new GuS3Bucket(this, 'ParliamentWrittenQuestionsBucketDev', {
+				app: APP_NAME,
+				bucketName: `parliament-written-questions-dev`,
+			});
 		}
 
 		const lambda = new GuScheduledLambda(this, APP_NAME, {
@@ -81,14 +77,14 @@ export class ParliamentQuestions extends GuStack {
 			resources: [`${ssmPrefix}/${ssmPath}/*`],
 		});
 
-		lambda.addToRolePolicy(getParametersPolicy); 
+		lambda.addToRolePolicy(getParametersPolicy);
 
 		lambda.addToRolePolicy(
 			new PolicyStatement({
 				effect: Effect.ALLOW,
 				actions: ['s3:PutObject'],
 				resources: [`${dataBucket.bucketArn}/*`],
-			})
+			}),
 		);
 
 		lambda.addToRolePolicy(
@@ -96,7 +92,7 @@ export class ParliamentQuestions extends GuStack {
 				effect: Effect.ALLOW,
 				actions: ['s3:ListBucket'],
 				resources: [`${dataBucket.bucketArn}`],
-			})
-		)
+			}),
+		);
 	}
 }

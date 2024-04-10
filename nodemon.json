@@ -1,4 +1,4 @@
 {
-    "verbose": true,
-    "ignore": ["src/output/*"]
+	"verbose": true,
+	"ignore": ["src/output/*"]
 }

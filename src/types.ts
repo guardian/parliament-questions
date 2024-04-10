@@ -88,7 +88,7 @@ export const headers = [
 	'dateAnswerCorrected',
 	'dateHoldingAnswer',
 	'attachmentCount',
-	'heading'
+	'heading',
 ];
 
 const Link = z.object({
@@ -149,7 +149,6 @@ export const GoogleCredential = z.object({
 
 export type GoogleCredential = z.infer<typeof GoogleCredential>;
 
-
 export enum Month {
 	Jan = 'January',
 	Feb = 'February',
@@ -162,5 +161,5 @@ export enum Month {
 	Sep = 'September',
 	Oct = 'October',
 	Nov = 'November',
-	Dec = 'December'
+	Dec = 'December',
 }
