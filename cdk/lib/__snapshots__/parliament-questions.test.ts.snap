@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The LordProject stack matches the snapshot 1`] = `
+exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
 {
   "Metadata": {
     "gu:cdk:constructs": [
+      "GuS3Bucket",
       "GuDistributionBucketParameter",
       "GuScheduledLambda",
     ],
@@ -17,23 +18,59 @@ exports[`The LordProject stack matches the snapshot 1`] = `
     },
   },
   "Resources": {
-    "lordprojectDDCE0CB2": {
+    "ParliamentWrittenQuestionsBucketParliamentquestions44C9D562": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "BucketName": "parliament-written-questions-test",
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "parliament-questions",
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/parliament-questions",
+          },
+          {
+            "Key": "Stack",
+            "Value": "investigations",
+          },
+          {
+            "Key": "Stage",
+            "Value": "TEST",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "parliamentquestions48FEC04C": {
       "DependsOn": [
-        "lordprojectServiceRoleDefaultPolicy6F577E43",
-        "lordprojectServiceRole59EEDFD8",
+        "parliamentquestionsServiceRoleDefaultPolicy15A0ED1E",
+        "parliamentquestionsServiceRole2F139CA6",
       ],
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "DistributionBucketName",
           },
-          "S3Key": "investigations/TEST/lord-project/lord-project.zip",
+          "S3Key": "investigations/TEST/parliament-questions/parliament-questions.zip",
         },
         "Environment": {
           "Variables": {
-            "APP": "lord-project",
-            "Bucket": "lord-project-dist",
-            "LoggingLevel": "4",
+            "APP": "parliament-questions",
+            "Bucket": "parliament-questions-dist",
+            "LoggingLevel": "3",
             "STACK": "investigations",
             "STAGE": "TEST",
             "Stage": "TEST",
@@ -43,19 +80,23 @@ exports[`The LordProject stack matches the snapshot 1`] = `
         "MemorySize": 512,
         "Role": {
           "Fn::GetAtt": [
-            "lordprojectServiceRole59EEDFD8",
+            "parliamentquestionsServiceRole2F139CA6",
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs20.x",
         "Tags": [
           {
             "Key": "App",
-            "Value": "lord-project",
+            "Value": "parliament-questions",
           },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/parliament-questions",
           },
           {
             "Key": "Stack",
@@ -70,7 +111,7 @@ exports[`The LordProject stack matches the snapshot 1`] = `
       },
       "Type": "AWS::Lambda::Function",
     },
-    "lordprojectServiceRole59EEDFD8": {
+    "parliamentquestionsServiceRole2F139CA6": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -101,11 +142,15 @@ exports[`The LordProject stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "lord-project",
+            "Value": "parliament-questions",
           },
           {
             "Key": "gu:cdk:version",
             "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/parliament-questions",
           },
           {
             "Key": "Stack",
@@ -119,7 +164,7 @@ exports[`The LordProject stack matches the snapshot 1`] = `
       },
       "Type": "AWS::IAM::Role",
     },
-    "lordprojectServiceRoleDefaultPolicy6F577E43": {
+    "parliamentquestionsServiceRoleDefaultPolicy15A0ED1E": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -158,7 +203,7 @@ exports[`The LordProject stack matches the snapshot 1`] = `
                       {
                         "Ref": "DistributionBucketName",
                       },
-                      "/investigations/TEST/lord-project/lord-project.zip",
+                      "/investigations/TEST/parliament-questions/parliament-questions.zip",
                     ],
                   ],
                 },
@@ -179,7 +224,7 @@ exports[`The LordProject stack matches the snapshot 1`] = `
                     {
                       "Ref": "AWS::AccountId",
                     },
-                    ":parameter/TEST/investigations/lord-project",
+                    ":parameter/TEST/investigations/parliament-questions",
                   ],
                 ],
               },
@@ -202,51 +247,87 @@ exports[`The LordProject stack matches the snapshot 1`] = `
                     {
                       "Ref": "AWS::AccountId",
                     },
-                    ":parameter/TEST/investigations/lord-project/*",
+                    ":parameter/TEST/investigations/parliament-questions/*",
                   ],
+                ],
+              },
+            },
+            {
+              "Action": [
+                "ssm:GetParameter",
+                "ssm:GetParametersByPath",
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:ssm:undefined:745349931791:parameter/TEST/investigations/parliament-questions/*",
+            },
+            {
+              "Action": "s3:PutObject",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "ParliamentWrittenQuestionsBucketParliamentquestions44C9D562",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+            {
+              "Action": "s3:ListBucket",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ParliamentWrittenQuestionsBucketParliamentquestions44C9D562",
+                  "Arn",
                 ],
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "lordprojectServiceRoleDefaultPolicy6F577E43",
+        "PolicyName": "parliamentquestionsServiceRoleDefaultPolicy15A0ED1E",
         "Roles": [
           {
-            "Ref": "lordprojectServiceRole59EEDFD8",
+            "Ref": "parliamentquestionsServiceRole2F139CA6",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "lordprojectlordprojectcron001020AllowEventRuleLordProjectlordprojectB499F0CFD2824A8D": {
+    "parliamentquestionsparliamentquestionscron00100AllowEventRuleParliamentQuestionsparliamentquestions179D0339095CAD34": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
           "Fn::GetAtt": [
-            "lordprojectDDCE0CB2",
+            "parliamentquestions48FEC04C",
             "Arn",
           ],
         },
         "Principal": "events.amazonaws.com",
         "SourceArn": {
           "Fn::GetAtt": [
-            "lordprojectlordprojectcron001020FFFFB711",
+            "parliamentquestionsparliamentquestionscron00100DB99E758",
             "Arn",
           ],
         },
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "lordprojectlordprojectcron001020FFFFB711": {
+    "parliamentquestionsparliamentquestionscron00100DB99E758": {
       "Properties": {
-        "ScheduleExpression": "cron(00 10 ? * 2 *)",
+        "ScheduleExpression": "cron(00 10 * * ? *)",
         "State": "ENABLED",
         "Targets": [
           {
             "Arn": {
               "Fn::GetAtt": [
-                "lordprojectDDCE0CB2",
+                "parliamentquestions48FEC04C",
                 "Arn",
               ],
             },
