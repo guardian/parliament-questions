@@ -70,7 +70,7 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
           "Variables": {
             "APP": "parliament-questions",
             "Bucket": "parliament-questions-dist",
-            "LoggingLevel": "4",
+            "LoggingLevel": "3",
             "STACK": "investigations",
             "STAGE": "TEST",
             "Stage": "TEST",

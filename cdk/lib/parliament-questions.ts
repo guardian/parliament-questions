@@ -26,7 +26,7 @@ export class ParliamentQuestions extends GuStack {
 		scope: App,
 		id: string,
 		props: GuStackProps,
-		loggingLevel: number = LoggingLevel.WARN,
+		loggingLevel: number = LoggingLevel.INFO,
 	) {
 		super(scope, id, props);
 
