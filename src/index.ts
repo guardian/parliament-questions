@@ -20,7 +20,7 @@ export const handler = async (): Promise<string> => {
 	// We need this for when we want to re-create the sheet from the archived data
 	// If s3Month is not provided (undefined is acceptable), the S3 will retrieve 
 	// data for the whole year
-	const RETRIEVE_FROM_API = false;
+	const RETRIEVE_FROM_API = true;
 	const s3Year = 2024;
 	const s3Month = Month.Feb;
 

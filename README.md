@@ -19,7 +19,7 @@ The tool is deployed as a lambda in AWS. It runs every day and extracts question
 2. uncomment the call to handler function in `index.ts`
 3. Set the RETRIEVE_FROM_API to true if you want to retrieve data from parliament api, or to false if you want to retrieve data from archived files in S3
 4. Make sure you choose the right `from` & `to` dates if you want to retrieve data from parliament api
-5. Set the correct s3Year & s3Month if you want to retrieve data from the archived files in S3
+5. Set the correct s3Year & s3Month if you want to retrieve data from the archived files in S3. s3Month is optional and restricts the S3 retrieval to the month. Without s3Month, S3 retrieval would collect data for all the year indicated through s3Year. 
 6. Run the app:
 
 ```bash
