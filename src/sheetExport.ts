@@ -1,6 +1,6 @@
 import { google, sheets_v4 } from 'googleapis';
 import { JWT } from 'google-auth-library';
-import { GoogleCredential, House, QuestionItem, QuestionValue, Questions, headers } from './types';
+import { GoogleCredential, headers, House, QuestionItem, QuestionValue, Questions } from './types';
 
 export const getGoogleClient = async (credentials: string): Promise<JWT> => {
 	const creds = GoogleCredential.parse(JSON.parse(credentials));
@@ -79,12 +79,11 @@ export const appendToSheet = async (client: JWT, spreadsheetId: string, values: 
 	console.log(`tab name is ${tabName}`);
 	const gsApi = google.sheets({version: 'v4', auth: client});
 	const firstRow = await getFirstEmptyRow(client, spreadsheetId, tabName);	
-	const firstRowHeader = headers();
 
 	console.log(`adding ${values.results.length} questions to sheet at row ${firstRow}`);
 
-	const initialRowsData = firstRow === 1 ? [firstRowHeader] : [];
-	const rows = initialRowsData.concat(buildRows(values.results, firstRowHeader));
+	const initialRowsData = firstRow === 1 ? [headers] : [];
+	const rows = initialRowsData.concat(buildRows(values.results, headers));
 
 	await appendRow(gsApi, spreadsheetId, tabName, firstRow, rows);
 }

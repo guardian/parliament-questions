@@ -58,10 +58,38 @@ export const QuestionValue = z.object({
 	// groupedQuestionsDates: []
 });
 
-export const headers = () => {
-	const header = Object.keys(QuestionValue.shape);
-	return header.toSpliced(3, 0, 'askingMemberParty').toSpliced(21, 0, 'answeringMemberParty');
-}
+export const headers = [
+	'id',
+	'askingMemberId',
+	'askingMember',
+	'askingMemberParty',
+	'house',
+	'memberHasInterest',
+	'dateTabled',
+	'dateForAnswer',
+	'uin',
+	'questionText',
+	'answeringBodyId',
+	'answeringBodyName',
+	'dateAnswered',
+	'answerText',
+	'isWithdrawn',
+	'isNamedDay',
+	'groupedQuestions',
+	'answerIsHolding',
+	'answerIsCorrection',
+	'answeringMemberId',
+	'answeringMember',
+	'answeringMemberParty',
+	'correctingMemberId',
+	'correctingMember',
+	'originalAnswerText',
+	'comparableAnswerText',
+	'dateAnswerCorrected',
+	'dateHoldingAnswer',
+	'attachmentCount',
+	'heading'
+];
 
 const Link = z.object({
 	rel: z.string().nullish(),
