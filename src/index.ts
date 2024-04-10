@@ -1,8 +1,3 @@
-import {
-	APIGatewayProxyEvent,
-	APIGatewayEventRequestContext,
-	APIGatewayProxyCallback,
-} from 'aws-lambda';
 import { getGoogleClient, appendToSheet } from './sheetExport';
 import { getConfig } from './config';
 import { getQuestions } from './questions-api-client';
@@ -16,17 +11,15 @@ import { House, QuestionsQueryStatus, Questions, Month } from './types';
 import { S3Client } from '@aws-sdk/client-s3';
 import moment, { Moment } from 'moment';
 
-export const handler = async (
-	event?: APIGatewayProxyEvent,
-	context?: APIGatewayEventRequestContext,
-	callback?: APIGatewayProxyCallback,
-): Promise<string> => {
+export const handler = async (): Promise<string> => {
 	const config = await getConfig();
 	const apiFrom = moment().subtract(1, 'days').startOf('day'); // yesterday
 	const apiTo = apiFrom;
 
 	// This const is used to toggle between retrieving data from API or S3
 	// We need this for when we want to re-create the sheet from the archived data
+	// If s3Month is not provided (undefined is acceptable), the S3 will retrieve 
+	// data for the whole year
 	const RETRIEVE_FROM_API = false;
 	const s3Year = 2024;
 	const s3Month = Month.Feb;
