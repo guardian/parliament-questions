@@ -77,6 +77,9 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
           },
         },
         "Handler": "dist/lambda/index.handler",
+        "LoggingConfig": {
+          "LogFormat": "JSON",
+        },
         "MemorySize": 512,
         "Role": {
           "Fn::GetAtt": [
@@ -338,6 +341,28 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
       "Properties": {
         "ScheduleExpression": "cron(00 10 * * ? *)",
         "State": "ENABLED",
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "parliament-questions",
+          },
+          {
+            "Key": "gu:cdk:version",
+            "Value": "TEST",
+          },
+          {
+            "Key": "gu:repo",
+            "Value": "guardian/parliament-questions",
+          },
+          {
+            "Key": "Stack",
+            "Value": "investigations",
+          },
+          {
+            "Key": "Stage",
+            "Value": "TEST",
+          },
+        ],
         "Targets": [
           {
             "Arn": {
