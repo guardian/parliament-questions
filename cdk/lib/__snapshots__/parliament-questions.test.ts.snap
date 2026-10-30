@@ -110,7 +110,7 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
             "Value": "TEST",
           },
         ],
-        "Timeout": 45,
+        "Timeout": 180,
       },
       "Type": "AWS::Lambda::Function",
     },

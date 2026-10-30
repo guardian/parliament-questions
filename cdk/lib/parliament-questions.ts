@@ -53,7 +53,7 @@ export class ParliamentQuestions extends GuStack {
 			app: APP_NAME,
 			runtime: Runtime.NODEJS_24_X,
 			fileName: `${APP_NAME}.zip`,
-			timeout: Duration.millis(45000),
+			timeout: Duration.minutes(3),
 			environment: {
 				Bucket: `${APP_NAME}-dist`,
 				Stage: this.stage,
