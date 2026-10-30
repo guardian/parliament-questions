@@ -87,7 +87,7 @@ exports[`The ParliamentQuestions stack matches the snapshot 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs20.x",
+        "Runtime": "nodejs24.x",
         "Tags": [
           {
             "Key": "App",

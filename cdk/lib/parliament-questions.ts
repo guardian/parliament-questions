@@ -51,7 +51,7 @@ export class ParliamentQuestions extends GuStack {
 
 		const lambda = new GuScheduledLambda(this, APP_NAME, {
 			app: APP_NAME,
-			runtime: Runtime.NODEJS_20_X,
+			runtime: Runtime.NODEJS_24_X,
 			fileName: `${APP_NAME}.zip`,
 			timeout: Duration.millis(45000),
 			environment: {
