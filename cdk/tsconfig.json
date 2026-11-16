@@ -1,7 +1,9 @@
 {
 	"extends": "@guardian/tsconfig/tsconfig.json",
 	"compilerOptions": {
-		"module": "CommonJS"
+		"module": "Node16",
+		"moduleResolution": "Node16",
+		"isolatedModules": true
 	},
 	"include": ["lib/**/*", "bin/**/*"],
 	"exclude": ["node_modules", "cdk.out", "lib/**/__snapshots__/**"]

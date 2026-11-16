@@ -3,3 +3,4 @@ dist
 .DS_Store
 parliament-questions.zip
 */output/*
+.idea

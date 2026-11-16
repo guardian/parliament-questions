@@ -12,12 +12,11 @@ import {
 export const getGoogleClient = async (credentials: string): Promise<JWT> => {
 	const creds = GoogleCredential.parse(JSON.parse(credentials));
 
-	const client: JWT = new google.auth.JWT(
-		creds.client_email,
-		undefined,
-		creds.private_key,
-		['https://www.googleapis.com/auth/spreadsheets'],
-	);
+	const client: JWT = new google.auth.JWT({
+		email: creds.client_email,
+		key: creds.private_key,
+		scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+	});
 
 	try {
 		await client.authorize();

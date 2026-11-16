@@ -29,7 +29,7 @@ export const QuestionValue = z.object({
 	id: z.number(),
 	askingMemberId: z.number(),
 	askingMember: Member.nullish(),
-	house: z.nativeEnum(House),
+	house: z.enum(House),
 	memberHasInterest: z.boolean(),
 	dateTabled: z.string(),
 	dateForAnswer: z.string(),

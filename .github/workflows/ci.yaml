@@ -9,19 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            cdk/package-lock.json
       - run: |
-          npm install
+          npm ci
+          npm run typecheck
+          npm test
           npm run build
           npm run package
       - name: CDK synth
         run: |
-          npm install
+          npm ci
           npm run build
           npm run lint
           npm run test
