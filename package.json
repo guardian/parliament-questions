@@ -4,8 +4,9 @@
 	"description": "",
 	"prettier": "@guardian/prettier",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "esbuild --bundle --platform=node --target=node20 --outfile=dist/index.js src/index.ts",
+		"test": "node --require ts-node/register --test src/*.test.ts",
+		"typecheck": "tsc --noEmit",
+		"build": "esbuild --bundle --platform=node --target=node24 --outfile=dist/index.js src/index.ts",
 		"package": "cd dist; zip -qr ../cdk/parliament-questions.zip ./*",
 		"start": "STAGE=DEV nodemon src/index.ts --ignore src/output/*.json",
 		"prettier:check": "prettier . --check",
@@ -14,24 +15,26 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@guardian/prettier": "^8.0.0",
-		"@types/aws-lambda": "^8.10.134",
-		"@types/google.accounts": "^0.0.14",
-		"@types/node": "^20.11.19",
-		"esbuild": "^0.25.0",
-		"nodemon": "^3.0.3",
-		"prettier": "^3.2.5",
+		"@guardian/prettier": "^11.0.0",
+		"@types/aws-lambda": "^8.10.164",
+		"@types/google.accounts": "^0.0.18",
+		"@types/node": "^24.19.2",
+		"esbuild": "^0.28.2",
+		"nodemon": "^3.1.14",
+		"prettier": "^3.10.1",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.3.3"
+		"tslib": "^2.9.1",
+		"typescript": "~6.0.3"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "^3.1007.0",
-		"@aws-sdk/client-ssm": "^3.1007.0",
-		"@aws-sdk/credential-provider-node": "^3.972.19",
-		"@guardian/tsconfig": "^0.2.0",
+		"@aws-sdk/client-s3": "^3.1169.0",
+		"@aws-sdk/client-ssm": "^3.1169.0",
+		"@aws-sdk/credential-provider-node": "^3.972.97",
+		"@guardian/tsconfig": "^2.0.0",
 		"aws-lambda": "^1.0.7",
-		"googleapis": "^133.0.0",
-		"moment": "^2.30.1",
-		"zod": "^3.22.4"
+		"google-auth-library": "^11.3.4",
+		"googleapis": "^190.0.0",
+		"moment": "^2.31.0",
+		"zod": "^4.6.7"
 	}
 }

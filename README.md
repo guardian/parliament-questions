@@ -15,17 +15,30 @@ This tool was initially executed manually on a local machine on March 27th, 2024
 The tool is deployed as a lambda in AWS. It runs every day and extracts questions that were asked or answered yesterday.
 
 ## Get started
+
+Use Node.js 24 (see `.nvmrc`). Install application dependencies with `npm ci` and infrastructure dependencies with `npm ci --prefix cdk`.
+
 1. Get Janus creds (for fetching creds from AWS Parameter Store)
 2. uncomment the call to handler function in `index.ts`
 3. Set the RETRIEVE_FROM_API to true if you want to retrieve data from parliament api, or to false if you want to retrieve data from archived files in S3
 4. Make sure you choose the right `from` & `to` dates if you want to retrieve data from parliament api
-5. Set the correct s3Year & s3Month if you want to retrieve data from the archived files in S3. s3Month is optional and restricts the S3 retrieval to the month. Without s3Month, S3 retrieval would collect data for all the year indicated through s3Year. 
+5. Set the correct s3Year & s3Month if you want to retrieve data from the archived files in S3. s3Month is optional and restricts the S3 retrieval to the month. Without s3Month, S3 retrieval would collect data for all the year indicated through s3Year.
 6. Run the app:
 
 ```bash
 nvm use
 npm run start
 ```
+
+### Dependency compatibility
+
+Dependencies use the latest stable releases compatible with the existing tooling:
+
+- The application uses TypeScript 6 because `ts-node` does not support TypeScript 7's compiler API.
+- CDK uses TypeScript 5.5.4 and ESLint 8.57.1 to satisfy `@guardian/eslint-config-typescript` 12's peer dependencies.
+- Both projects use Node.js 24 type definitions to match the development and Lambda runtimes.
+
+Run `npm run typecheck`, `npm test`, and `npm run build` for the application. In `cdk`, run `npm run build`, `npm run lint`, `npm test`, and `npm run synth`.
 
 ### Important Note:
 
